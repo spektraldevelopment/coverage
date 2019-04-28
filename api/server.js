@@ -19,6 +19,7 @@ const errorHandlers = require('./middleware/errorHandlers');
 // 4. Require routes
 const { router: itemsRoutes } = require('./routes/items/itemsRoutes');
 const { router: itemRoutes } = require('./routes/item/itemRoutes');
+const { router: userRoutes } = require('./routes/user/userRoutes');
 
 // 5. Require conatants
 const { PORT, URL } = require('./utils/constants');
@@ -33,6 +34,7 @@ router.use('/', express.static(publicPath));
 // 7. Utilise routes
 router.use('/items', itemsRoutes);
 router.use('/item', itemRoutes);
+router.use('/user', userRoutes);
 
 // 8. Apply error handling middleware (meaningfully last)
 applyMiddleware(errorHandlers, router);
