@@ -26,8 +26,8 @@ const { PORT, URL } = require('./utils/constants');
 // 6. Apply general middleware
 applyMiddleware(middleWare, router);
 
+// 6a. Hook up server to use build files
 const publicPath = path.resolve(__dirname, '..', 'build');
-
 router.use('/', express.static(publicPath));
 
 // 7. Utilise routes
