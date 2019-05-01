@@ -12,6 +12,7 @@ import MainView from './views/main-view/main-view';
 import AddView from './views/add-view/add-view';
 import EditView from './views/edit-view/edit-view';
 import ItemView from './views/item-view/item-view';
+import LoginView from './views/login-view/login-view';
 
 //Import font awesome icons
 library.add(faPlus);
@@ -20,15 +21,48 @@ library.add(faTrashAlt);
 library.add(faSearch);
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      user: {}
+    }
+  }
+
+  loginUser = (isLoggedIn, user) => {
+    this.setState({
+      isLoggedIn,
+      user
+    });
+  }
+
   render() {
     return (
       <>
         <Header />
         <Switch>
-          <Route exact path="/" component={MainView}/>
+          
+          {/* Login View */}
+          <Route exact path="/" 
+            render={(props) => <LoginView {...props} 
+              loginUser={this.loginUser} /> }/>
+          
+          {/* Add View */}
           <Route exact path="/add" component={AddView}/>
+          
+          {/* Edit View */}
           <Route exact path="/edit/:id" component={EditView}/>
+          
+          {/* ItemView */}
           <Route exact path="/item/:id" component={ItemView}/>
+          
+          {/* Main View */}
+          <Route exact path="/items" 
+            render={(props) => <MainView {...props} 
+              isLoggedIn={this.state.isLoggedIn}
+              user={this.state.user} /> }/>
+          <Redirect from="*" to='/' />
         </Switch>
       </>
     );

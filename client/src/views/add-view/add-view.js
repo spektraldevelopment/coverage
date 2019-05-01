@@ -79,7 +79,7 @@ class AddView extends Component {
 
         if(redirectToMain) {
             return(
-                <Redirect exact to="/" />     
+                <Redirect exact to="/items" />     
             );
         } else {
             return (

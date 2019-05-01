@@ -95,7 +95,7 @@ class EditView extends Component {
 
         if(redirectToMain) {
             return(
-                <Redirect exact to="/" />     
+                <Redirect exact to="/items" />     
             );
         } else {
             return (
@@ -140,7 +140,7 @@ class EditView extends Component {
                                 </Button>
 
 
-                                <Link to={`/`}>
+                                <Link to={`/items`}>
                                     <Button variant="danger" type="submit">
                                         Cancel
                                     </Button>

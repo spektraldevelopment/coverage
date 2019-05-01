@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { 
     Container, 
     Row, 
@@ -20,6 +20,8 @@ class MainView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoggedIn: this.props.isLoggedIn,
+            user: this.props.user,
             search: "",
             items: []
         };
@@ -65,7 +67,9 @@ class MainView extends Component {
 
     componentDidMount() {
 
-        this.getInventory();
+        if(this.state.isLoggedIn) {
+            this.getInventory();   
+        }    
     }
 
     onSearch = (evt) => {
@@ -88,53 +92,59 @@ class MainView extends Component {
     }
 
     render() {
-        return(
-            <Container className="main-view">
-                <Row>
-                    <Col className="mt-3">
-                        <Link to={`/add`}>Add<FontAwesomeIcon icon="plus" /></Link>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="mt-3">
-                        <SearchBar search={this.state.search} onSearch={this.onSearch}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <ListGroup as="ul">
-                            {
-                                this.state.items.map((item, i) => {
-                                    return (
-                                        <ListGroup.Item as="li" key={item._id} >
-                                            {/* <img src="https://via.placeholder.com/100?text=Image+Of+Item" alt="item"/> */}
-                                            <h4>{item.name}</h4>
-                                            <h5>{item.manufacturer}</h5>
-                                            <p>{item.cost}</p>
-                                            
-                                            <div className="float-right mx-2">
-                                                <Button variant="danger" data-item-id={item._id} onClick={this.onDeleteClick}>
-                                                    <FontAwesomeIcon icon="trash-alt" />
-                                                </Button>
-                                            </div>
 
-                                            <div className="float-right mx-2" >
-                                                <Link to={`/edit/${item._id}`}>
-                                                    <Button variant="dark" data-item-id={item._id} onClick={this.onEditClick}>
-                                                        <FontAwesomeIcon icon="edit" />
+        if(this.state.isLoggedIn) {
+            return(
+                <Container className="main-view">
+                    <Row>
+                        <Col className="mt-3">
+                            <Link to={`/add`}>Add<FontAwesomeIcon icon="plus" /></Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="mt-3">
+                            <SearchBar search={this.state.search} onSearch={this.onSearch}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ListGroup as="ul">
+                                {
+                                    this.state.items.map((item, i) => {
+                                        return (
+                                            <ListGroup.Item as="li" key={item._id} >
+                                                <h4>{item.name}</h4>
+                                                <h5>{item.manufacturer}</h5>
+                                                <p>${item.cost}</p>
+                                                
+                                                <div className="float-right mx-2">
+                                                    <Button variant="danger" data-item-id={item._id} onClick={this.onDeleteClick}>
+                                                        <FontAwesomeIcon icon="trash-alt" />
                                                     </Button>
-                                                </Link>
-                                            </div>    
-                                            
-                                        </ListGroup.Item>
-                                    );
-                                })
-                            }
-                        </ListGroup>
-                    </Col>
-                </Row>
-            </Container>
-        );
+                                                </div>
+    
+                                                <div className="float-right mx-2" >
+                                                    <Link to={`/edit/${item._id}`}>
+                                                        <Button variant="dark" data-item-id={item._id} onClick={this.onEditClick}>
+                                                            <FontAwesomeIcon icon="edit" />
+                                                        </Button>
+                                                    </Link>
+                                                </div>    
+                                                
+                                            </ListGroup.Item>
+                                        );
+                                    })
+                                }
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                </Container>
+            );
+        } else {
+            return(
+                <Redirect exact to="/" />     
+            );
+        }
     }
 }
 

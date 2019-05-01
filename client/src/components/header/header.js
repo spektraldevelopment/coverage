@@ -17,11 +17,11 @@ export default class Example extends React.Component {
     return (
       <div>
         <Navbar bg="dark" variant="dark" expand="lg">
-          <Link className="nav-link nav-brand" exact="true" to="/">Coverage</Link>
+          <Link className="nav-link nav-brand" exact="true" to="/items">Coverage</Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Link className="nav-link" exact="true" to="/">My Items</Link>
+              <Link className="nav-link" exact="true" to="/items">My Items</Link>
               <Link className="nav-link" to="/add">Add</Link>
             </Nav>
           </Navbar.Collapse>

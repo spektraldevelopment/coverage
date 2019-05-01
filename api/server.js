@@ -51,7 +51,10 @@ server.listen(PORT, () => {
   }
 });
 
-mongoose.connect(URL, { useNewUrlParser: true })
+mongoose.connect(URL, { 
+  useNewUrlParser: true ,
+  useCreateIndex: true
+})
   .then(async () => {
     console.log(`CONNECTED to server: ${URL}`);
   })
