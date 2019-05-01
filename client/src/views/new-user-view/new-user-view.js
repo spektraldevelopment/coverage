@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Alert, Container, Col, Row, Form, Button } from 'react-bootstrap';
 
-class LoginView extends Component {
+class NewUserView extends Component {
 
     constructor(props) {
         super(props);
@@ -14,31 +14,6 @@ class LoginView extends Component {
             redirectToMain: false,
             showError: false
         }
-    }
-
-    onLogin = (evt) => {
-        evt.preventDefault();
-        
-        axios.post('/user/login', {
-            "email": this.state.email,
-            "password": this.state.password
-        })
-        .then((response) => {
-
-            this.props.loginUser(true, response.data.user);
-
-            this.setState({
-                showError: false,
-                redirectToMain: true
-            });
-        })
-        .catch((error) => {
-            console.error("No BUENO!!!: ", error);
-            this.setState({
-                showError: true
-            });
-        });
-
     }
 
     onFieldChange = (evt) => {
@@ -59,28 +34,60 @@ class LoginView extends Component {
         }
     }
 
+    onSubmitNewUser = (evt) => {
+        evt.preventDefault();
+
+        if (this.state.email !== '' && this.state.password !== '') {
+            axios.post('/user/new', {
+                "email": this.state.email,
+                "password": this.state.password
+            })
+            .then((response) => {
+    
+                this.setState({
+                    showError: false,
+                    redirectToMain: true
+                });
+            })
+            .catch((error) => {
+                console.error("No BUENO!!!: ", error);
+                this.setState({
+                    showError: true
+                });
+            });           
+        } else {
+            this.setState({
+                showError: true
+            });
+        }
+
+    }
+
+
     render() {
 
         let alert;
 
         if(this.state.showError) {
-            alert = <Alert key="danger" variant="danger">The email and/or password is incorrect. Please try again.</Alert>;
+            alert = <Alert key="danger" variant="danger">Please enter a valid email and a valid password.</Alert>;
         }
 
         if(this.state.redirectToMain) {
             return(
-                <Redirect exact to="/items" />     
+                <Redirect exact to="/login" />     
             );
         } else {
             return(
                 <>
 
                     <Container>
+
                         <Row>
                             <Col md={{ span: 6, offset: 3 }}>
-                                <h1>Login</h1>
+                                <h1>New User</h1>
                             </Col>
                         </Row>
+
                         <Row>
                             <Col md={{ span: 6, offset: 3 }}>
                                 {alert}
@@ -102,7 +109,7 @@ class LoginView extends Component {
                                             value={this.state.password}
                                             onChange={this.onFieldChange}/>
                                     </Form.Group>
-                                    <Button variant="primary" type="submit" onClick={this.onLogin}>
+                                    <Button variant="primary" type="submit" onClick={this.onSubmitNewUser}>
                                         Submit
                                     </Button>
                                 </Form>
@@ -115,4 +122,4 @@ class LoginView extends Component {
     }
 }
 
-export default LoginView;
+export default NewUserView;

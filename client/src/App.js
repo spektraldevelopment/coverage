@@ -13,6 +13,7 @@ import AddView from './views/add-view/add-view';
 import EditView from './views/edit-view/edit-view';
 import ItemView from './views/item-view/item-view';
 import LoginView from './views/login-view/login-view';
+import NewUserView from './views/new-user-view/new-user-view';
 
 //Import font awesome icons
 library.add(faPlus);
@@ -47,6 +48,9 @@ class App extends Component {
           <Route exact path="/" 
             render={(props) => <LoginView {...props} 
               loginUser={this.loginUser} /> }/>
+
+          {/* New User View */}
+          <Route exact path="/new-user" component={NewUserView}/>
           
           {/* Add View */}
           <Route exact path="/add" component={AddView}/>
@@ -62,6 +66,7 @@ class App extends Component {
             render={(props) => <MainView {...props} 
               isLoggedIn={this.state.isLoggedIn}
               user={this.state.user} /> }/>
+          
           <Redirect from="*" to='/' />
         </Switch>
       </>
