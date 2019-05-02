@@ -36,6 +36,8 @@ router.use('/items', itemsRoutes);
 router.use('/item', itemRoutes);
 router.use('/user', userRoutes);
 
+router.use('*', (req, res) => { res.sendFile(`${publicPath}/index.html`) });
+
 // 8. Apply error handling middleware (meaningfully last)
 applyMiddleware(errorHandlers, router);
 
