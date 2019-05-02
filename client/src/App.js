@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Header />
+        <Header isLoggedIn={this.state.isLoggedIn}/>
         <Switch>
           
           {/* Login View */}

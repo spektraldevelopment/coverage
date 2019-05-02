@@ -67,6 +67,8 @@ class MainView extends Component {
 
     componentDidMount() {
 
+        console.log("Main View: ", this.state.isLoggedIn);
+
         if(this.state.isLoggedIn) {
             this.getInventory();   
         }    
