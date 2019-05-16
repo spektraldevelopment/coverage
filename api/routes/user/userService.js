@@ -7,12 +7,15 @@ exports.createUser = async (email, password) => {
     console.log("Email: ", email);
     console.log("Password: ", password);
 
-    const user = new User({ email, password })
+    const user = new User({
+        email,
+        password
+    })
     try {
-      // save it
-      const doc = await user.save()
-      return doc;
-    } catch(e) {}
+        // save it
+        const doc = await user.save()
+        return doc;
+    } catch (e) {}
 }
 
 exports.findUser = async (email, password) => {
@@ -20,18 +23,21 @@ exports.findUser = async (email, password) => {
     console.log("Email: ", email);
     console.log("Password: ", password);
 
-    const user = await User.findOne({ email })
+    const user = await User.findOne({
+        email
+    })
+
+    const match = await user.comparePassword(password)
 
     try {
-        if (user && user.password === password) {
-            // if they match, send back the user
+        if (match) {
+            // send back the user
             return user;
         } else {
-            // if they don't match, send back a 401
+            // no match, send back a 401
             return 'unauthorized';
         }
     } catch (err) {
         console.error(err);
-        next (err);
     }
 }
